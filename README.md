@@ -4,4 +4,5 @@
 
 how to run
 `go mod tidy`
+
 `go run .`
