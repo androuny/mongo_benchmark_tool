@@ -29,3 +29,7 @@ func GenerateRandomUsersAsBSON(count int) []interface{} {
 	}
 	return userList
 }
+
+func GeneratePhoneNumber() string {
+	return gofakeit.Phone()
+}

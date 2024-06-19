@@ -85,3 +85,38 @@ func (mhdl MongoHandler) MakeNewUsers(count int) (time.Duration, time.Duration, 
 	elapsed := t.Sub(start)
 	return genTime, elapsed, err
 }
+
+func (mhdl MongoHandler) UpdateAllUsers() (int64, time.Duration, error) {
+	start := time.Now()
+
+	collection := mhdl.client.Database(mhdl.database).Collection(mhdl.collection)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	filter := bson.D{{}}
+	update := bson.D{{"$set", bson.D{{"phone", GeneratePhoneNumber()}}}}
+
+	res, err := collection.UpdateMany(ctx, filter, update)
+	if err != nil {log.Fatalf("[DB_UPDATE] [UpdateMany] %v", err)}
+	updatedUsers := res.ModifiedCount
+
+	elapsed := time.Now().Sub(start)
+	return updatedUsers ,elapsed, err
+}
+
+func (mhdl MongoHandler) DeleteAllUsers() (int64, time.Duration, error) {
+	start := time.Now()
+
+	collection := mhdl.client.Database(mhdl.database).Collection(mhdl.collection)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	filter := bson.D{{}}
+	res, err := collection.DeleteMany(ctx, filter)
+
+	if err != nil {log.Fatalf("[DB_DELETE] [DeleteMany] %v", err)}
+	deletedCount := res.DeletedCount
+
+	elapsed := time.Now().Sub(start)
+	return deletedCount, elapsed, err
+}

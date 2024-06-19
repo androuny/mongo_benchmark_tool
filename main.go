@@ -46,4 +46,16 @@ func main() {
         log.Fatalf("[DB_READ_ALL] %v", err1)
     }
     fmt.Printf("Database READ Success, took %v ms \n", readTime.Milliseconds())
+
+    updatedCount, updateTime, err2 := handler.UpdateAllUsers()
+    if err2 != nil {
+        log.Fatalf("[DB_UPDATE_ALL] %v", err2)
+    }
+    fmt.Printf("Database UPDATE %v Users Success, took %v ms \n", updatedCount, updateTime.Milliseconds())
+
+    deletedCount, deleteTime, err3 := handler.DeleteAllUsers()
+    if err3 != nil {
+        log.Fatalf("[DB_DELETE_ALL] %v", err3)
+    }
+    fmt.Printf("Database DELETE %v Users Success, took %v ms \n", deletedCount, deleteTime.Milliseconds())
 }
