@@ -11,5 +11,5 @@ how to run
 
 features to implement
 
-- add benchmark for field update
+- ~~add benchmark for field update~~
 - add benchmark config file for uri, db, collection etc
